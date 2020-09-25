@@ -88,9 +88,11 @@ console.log('eslint');;    // 多加一个分号
     // ...
     "scripts": {
         // ...
-        "eslint": "eslint ./**"      // 检查当前路径下的文件
+        "eslint": "eslint ./**"                  // 检查当前路径下的文件
         // 或
-        "eslint": "eslint ./src/**"  // 只检查src路径下的文件
+        "eslint": "eslint ./src/**"              // 只检查src路径下的文件
+        // 或
+        "eslint": "eslint --ext .js,.vue src"    // 只检查src目录下的.js文件和.vue文件
     }
 }
 ```
