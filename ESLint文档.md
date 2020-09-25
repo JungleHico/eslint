@@ -55,7 +55,7 @@ module.exports = {
     }
 };
 ```
-如果之前在初始化时未指定`node`环境，则需要在`env`属性中定义`node`的全局变量和作用域，或者指定`module`为全局变量，否则`eslint:recommended`的默认规则会报错`'module' is not defined  no-undef`：
+如果之前在初始化时未指定`node`环境，则需要在`env`属性中定义`node`的全局变量和作用域，或者指定`module`为全局变量，否则`eslint:recommended`的默认规则会报错：`'module' is not defined  no-undef`：
 
 ```js
 module.exports = {
@@ -78,7 +78,7 @@ module.exports = {
 首先，创建`src`目录，并创建脚本文件`src/index.js`：
 
 ```js
-console.log('eslint');;
+console.log('eslint');;    // 多加一个分号
 ```
 
 在`package.json`的`scripts`中配置脚本命令：
@@ -102,7 +102,7 @@ console.log('eslint');;
 /*.json
 ```
 
-除此之外，为了指定ESLint检查和忽略的文件和目录，可以在eslint命令中设置，详见官方关于ESLint命令行文档：[https://eslint.bootcss.com/docs/user-guide/command-line-interface](https://eslint.bootcss.com/docs/user-guide/command-line-interface)
+除此之外，为了指定ESLint检查和忽略的文件和目录，可以在eslint命令中设置，详见官方ESLint命令行文档：[https://eslint.bootcss.com/docs/user-guide/command-line-interface](https://eslint.bootcss.com/docs/user-guide/command-line-interface)
 
 
 运行命令：
@@ -178,7 +178,7 @@ module.exports = {
 ```
 
 ### env
-`env`定义了预定义的全局变量，例如在配置中的`"node": true`，表示使用Node的全局变量，更多可用的环境参考官方文档。
+`env`定义了预定义的全局变量，例如：`"node": true`表示使用Node的全局变量，更多可用的环境参考官方文档。
 
 ### extends
 `extends`表示ESLint应用的规则的集合，值可以是字符串，也可以是字符串的数组，扩展的来源可以是三种：
@@ -242,7 +242,7 @@ How would you like to use ESLint? · style
 Which framework does your project use? · vue
 ```
 
-创建并初始化`src/test.vue`文件：
+验证插件是否安装成功，首先创建并初始化`src/test.vue`文件：
 
 ```html
 <template>
@@ -264,7 +264,7 @@ export default {
 </style>
 ```
 
-运行命令进行检查，或者已经在VS Code上安装了ESLint的插件，可以看到
+运行`npm run eslint`进行检查，或者已经在VS Code上安装了ESLint的插件，可以看到
 报了若干错误，说明插件安装成功。
 
 ### 解析器配置：
@@ -304,4 +304,6 @@ module.exports = {
     }
 };
 ```
+
+## 最佳实践
 
