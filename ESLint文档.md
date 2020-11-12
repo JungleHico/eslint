@@ -8,12 +8,12 @@ ESLint 是在 ECMAScript/JavaScript 代码中识别和报告模式匹配的工�
 ## 安装
 
 1. 新建项目，并在目录下初始化npm（如果没有）：
-```bash
+```sh
 npm init -y
 ```
 
 2. 安装ESLint（推荐本地安装）
-```bash
+```sh
 # 本地安装
 npm install eslint --save-dev
 # 或全局安装：
@@ -21,14 +21,14 @@ npm install eslint --global
 ```
 
 3. 初始化配置文件
-```bash
+```sh
 ./node_modules/.bin/eslint --init  # Windows下路径需要使用反斜杠
 # 或
 eslint --init
 ```
 
 配置选项：
-```bash
+```sh
 How would you like to use ESLint? · problems
 What type of modules does your project use? · esm
 Which framework does your project use? · none
@@ -109,12 +109,12 @@ console.log('eslint');;    // 多加一个分号
 
 运行命令：
 
-```bash
+```sh
 npm run eslint
 ```
 
 运行结果会报错，提示有不必要的分号：
-```bash
+```sh
 error  Unnecessary semicolon  no-extra-semi
 ```
 
@@ -132,7 +132,7 @@ error  Unnecessary semicolon  no-extra-semi
 
 运行命令：
 
-```bash
+```sh
 npm run eslint:fix
 ```
 
@@ -186,7 +186,7 @@ module.exports = {
 `extends`表示ESLint应用的规则的集合，值可以是字符串，也可以是字符串的数组，扩展的来源可以是三种：
 1. ESLint内置的扩展。例如：`eslint:recommended`和`eslint:all`，其中，`eslint:recommended`是官方推荐的规则；
 2. 可共享的扩展。通过npm提供的一些共享的包，是一些流行的风格指南/编码规范，例如`standard`和`airbnb`，包名一般带`eslint-config-`前缀。可以手动通过npm安装，安装后会提示安装其他相关的包，按提示安装即可：
-```bash
+```sh
 npm install eslint-config-standard --save-dev
 npm install eslint-plugin-import eslint-plugin-node eslint-plugin-promise eslint-plugin-standard --save-dev
 ```
@@ -203,7 +203,7 @@ module.exports = {
 
 除此之外，在运行`eslint --init`初始化配置文件时，可以直接从几个流行风格中指定和安装其中一个：
 
-```bash
+```sh
 How would you like to use ESLint? · style
 # ...
 How would you like to define a style for your project? · guide
@@ -215,7 +215,7 @@ Which style guide do you want to follow? · standard
 ### plugins
 虽然有多种官方的扩展可以选择，但是默认的扩展只能检查JavaScript语法，不能解析JSX或者Vue文件，对此，我们需要安装相关的插件。
 
-```bash
+```sh
 npm install eslint-plugin-vue --save-dev
 ```
 
@@ -238,7 +238,7 @@ module.exports = {
 
 也可以在`eslint --init`初始化配置文件时配置：
 
-```bash
+```sh
 How would you like to use ESLint? · style
 # ...
 Which framework does your project use? · vue
@@ -307,5 +307,78 @@ module.exports = {
 };
 ```
 
-## 最佳实践
+## 在 Webpack 中使用 ESLint
 
+1. 安装相关的包
+
+```sh
+npm install eslint eslint-loader eslint-friendly-formatter --save-dev
+```
+
+2. 修改 webpack 开发环境的配置文件 `webpack.dev.js`：
+
+```js
+const path = require('path')
+
+module.exports = {
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                loader: 'eslint-loader',
+                enforce: 'pre',
+                include: path.resolve(__dirname, 'src'),
+                options: {
+                    formatter: require('eslint-friendly-formatter')
+                }
+            }
+        ]
+    }
+}
+```
+
+3. 创建 `.eslintrc.js` 配置文件：
+
+```js
+module.exports = {
+    root: true,
+    parserOptions: {
+        parser: 'babel-eslint',
+        sourceType: 'module',
+        ecmaVersion: 11
+    },
+    env: {
+        browser: true
+    },
+    extends: ['eslint:recommended'],
+    rules: {
+        
+    }
+}
+```
+
+如果需要使用流行风格指南 `standard`，需要安装以下包：
+
+```sh
+npm install --save-dev "eslint-config-standard eslint-plugin-import eslint-plugin-node eslint-plugin-promise eslint-plugin-standard
+```
+
+然后修改 `.eslintrc.js` 的 `extends` 选项：
+
+```js
+module.exports = {
+    // ...
+    extends: ['standard'],
+}
+```
+
+4. 创建 `.eslintignore` 文件，部分路径和文件不启用 eslint 检查：
+
+```sh
+/dist/
+/*.js
+```
+
+> 根目录下的配置相关的文件夹也应添加到该文件中
+
+## 检查 Vue 文件及语法
