@@ -315,7 +315,7 @@ module.exports = {
 npm install eslint eslint-loader eslint-friendly-formatter --save-dev
 ```
 
-2. 修改 webpack 开发环境的配置文件 `webpack.dev.js`：
+2. 修改 webpack 配置文件 `webpack.common.js`：
 
 ```js
 const path = require('path')
